@@ -13,7 +13,7 @@ import (
 )
 
 type Handler struct {
-	config         *config.Config
+	configWatcher  *config.Watcher
 	midiClient     *midi.Client
 	sessionManager *auth.SessionManager
 	upgrader       websocket.Upgrader
@@ -27,9 +27,9 @@ type ConfigResponse struct {
 	Buttons []config.ButtonConfig `json:"buttons"`
 }
 
-func New(cfg *config.Config, midiClient *midi.Client, sessionManager *auth.SessionManager) *Handler {
+func New(configWatcher *config.Watcher, midiClient *midi.Client, sessionManager *auth.SessionManager) *Handler {
 	return &Handler{
-		config:         cfg,
+		configWatcher:  configWatcher,
 		midiClient:     midiClient,
 		sessionManager: sessionManager,
 		upgrader: websocket.Upgrader{
@@ -94,9 +94,10 @@ func (h *Handler) HandleLogout(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) HandleConfig(w http.ResponseWriter, r *http.Request) {
+	cfg := h.configWatcher.Get()
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(ConfigResponse{
-		Buttons: h.config.MIDI.Buttons,
+		Buttons: cfg.MIDI.Buttons,
 	})
 }
 
@@ -134,15 +135,18 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
+		// Get current config
+		cfg := h.configWatcher.Get()
+
 		// Validate button index
-		if msg.ButtonIndex < 0 || msg.ButtonIndex >= len(h.config.MIDI.Buttons) {
+		if msg.ButtonIndex < 0 || msg.ButtonIndex >= len(cfg.MIDI.Buttons) {
 			log.Printf("Invalid button index: %d", msg.ButtonIndex)
 			continue
 		}
 
 		// Send MIDI note
-		button := h.config.MIDI.Buttons[msg.ButtonIndex]
-		if err := h.midiClient.SendNote(button.Note, h.config.MIDI.Velocity, 100*time.Millisecond); err != nil {
+		button := cfg.MIDI.Buttons[msg.ButtonIndex]
+		if err := h.midiClient.SendNote(button.Note, cfg.MIDI.Velocity, 100*time.Millisecond); err != nil {
 			log.Printf("Failed to send MIDI note: %v", err)
 			continue
 		}

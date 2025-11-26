@@ -14,9 +14,9 @@ midi:
     - note: 62  # D4
       label: "버튼 3"
     - note: 63  # D#4
-      label: "버튼 4"
+      label: "≪"
     - note: 64  # E4
-      label: "버튼 5"
+      label: "⏯️"
     - note: 65  # F4
       label: "버튼 6"
     - note: 66  # F#4

@@ -19,14 +19,16 @@ func main() {
 	configPath := flag.String("config", "config.yaml", "Path to configuration file")
 	flag.Parse()
 
-	// Load configuration
-	cfg, err := config.Load(*configPath)
+	// Load configuration with auto-reload watcher
+	configWatcher, err := config.NewWatcher(*configPath)
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
 	}
 
+	cfg := configWatcher.Get()
 	log.Printf("Starting Remote MIDI Server on port %d", cfg.Server.Port)
 	log.Printf("MIDI Port: %s, Channel: %d", cfg.MIDI.PortName, cfg.MIDI.Channel)
+	log.Println("Config auto-reload enabled - changes will be detected automatically")
 
 	// Initialize MIDI client
 	midiClient, err := midi.New(cfg.MIDI.PortName, cfg.MIDI.Channel)
@@ -39,7 +41,7 @@ func main() {
 	sessionManager := auth.NewSessionManager(cfg.Server.Password)
 
 	// Initialize HTTP handler
-	h := handler.New(cfg, midiClient, sessionManager)
+	h := handler.New(configWatcher, midiClient, sessionManager)
 
 	// Setup HTTP routes
 	mux := http.NewServeMux()

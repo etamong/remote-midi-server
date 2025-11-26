@@ -15,29 +15,28 @@ jobs:
     strategy:
       matrix:
         include:
-          # macOS builds
+          # macOS builds (with MIDI support via CGO)
           - os: macos-latest
             goos: darwin
             goarch: amd64
             artifact_name: remote-midi-server-darwin-amd64
+            cgo_enabled: 1
           - os: macos-latest
             goos: darwin
             goarch: arm64
             artifact_name: remote-midi-server-darwin-arm64
-          # Linux builds
+            cgo_enabled: 1
+          # Linux builds (without MIDI - server only)
           - os: ubuntu-latest
             goos: linux
             goarch: amd64
             artifact_name: remote-midi-server-linux-amd64
+            cgo_enabled: 0
           - os: ubuntu-latest
             goos: linux
             goarch: arm64
             artifact_name: remote-midi-server-linux-arm64
-          # Windows builds
-          - os: ubuntu-latest
-            goos: windows
-            goarch: amd64
-            artifact_name: remote-midi-server-windows-amd64.exe
+            cgo_enabled: 0
 
     steps:
       - name: Checkout code
@@ -54,7 +53,7 @@ jobs:
           brew install pkg-config
 
       - name: Install dependencies (Linux)
-        if: matrix.os == 'ubuntu-latest' && matrix.goos == 'linux'
+        if: matrix.os == 'ubuntu-latest' && matrix.cgo_enabled == '1'
         run: |
           sudo apt-get update
           sudo apt-get install -y libasound2-dev
@@ -66,7 +65,7 @@ jobs:
 
       - name: Build binary
         env:
-          CGO_ENABLED: 1
+          CGO_ENABLED: ${{ matrix.cgo_enabled }}
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
         run: |

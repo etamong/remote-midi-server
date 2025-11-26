@@ -1,7 +1,9 @@
 # Remote MIDI Server
 
 [![Build and Push Docker Image](https://github.com/etamong/remote-midi-server/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/etamong/remote-midi-server/actions/workflows/docker-publish.yml)
+[![Release](https://github.com/etamong/remote-midi-server/actions/workflows/release.yml/badge.svg)](https://github.com/etamong/remote-midi-server/actions/workflows/release.yml)
 [![Docker Image](https://ghcr-badge.egpl.dev/etamong/remote-midi-server/latest_tag?trim=major&label=latest)](https://github.com/etamong/remote-midi-server/pkgs/container/remote-midi-server)
+[![GitHub Release](https://img.shields.io/github/v/release/etamong/remote-midi-server)](https://github.com/etamong/remote-midi-server/releases/latest)
 
 웹 브라우저에서 접속하여 MIDI 신호를 전송할 수 있는 원격 MIDI 컨트롤러입니다. QLab 5 및 다른 MIDI 지원 애플리케이션과 함께 사용할 수 있습니다.
 
@@ -22,7 +24,28 @@
 
 ## 설치 방법
 
-### 옵션 1: Nix 사용 (권장)
+### 옵션 1: 사전 빌드된 바이너리 (가장 간단)
+
+[Releases 페이지](https://github.com/etamong/remote-midi-server/releases/latest)에서 OS에 맞는 바이너리를 다운로드하세요:
+
+- **macOS (Intel)**: `remote-midi-server-darwin-amd64.tar.gz`
+- **macOS (Apple Silicon)**: `remote-midi-server-darwin-arm64.tar.gz`
+- **Linux (x86_64)**: `remote-midi-server-linux-amd64.tar.gz`
+- **Linux (ARM64)**: `remote-midi-server-linux-arm64.tar.gz`
+- **Windows (x86_64)**: `remote-midi-server-windows-amd64.exe.zip`
+
+다운로드 후:
+```bash
+# 압축 해제
+tar xzf remote-midi-server-*.tar.gz  # macOS/Linux
+# 또는
+unzip remote-midi-server-*.zip       # Windows
+
+# 실행
+./remote-midi-server
+```
+
+### 옵션 2: Nix 사용
 
 Nix를 사용하면 모든 의존성이 자동으로 관리됩니다:
 
@@ -40,7 +63,7 @@ nix develop
 
 이제 모든 의존성(Go, RtMidi, CGO 라이브러리 등)이 자동으로 설정됩니다!
 
-### 옵션 2: 수동 설치
+### 옵션 3: 수동 설치
 
 1. 저장소 클론 또는 다운로드
 
@@ -59,7 +82,7 @@ go mod download
 brew install rtmidi
 ```
 
-### 옵션 3: Docker 사용 (가장 간단)
+### 옵션 4: Docker 사용
 
 Docker를 사용하면 의존성 설치 없이 바로 실행할 수 있습니다:
 

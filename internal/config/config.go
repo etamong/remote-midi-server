@@ -27,8 +27,8 @@ type MIDIConfig struct {
 }
 
 type ButtonConfig struct {
-	Note  uint8  `mapstructure:"note"`
-	Label string `mapstructure:"label"`
+	Note  uint8  `mapstructure:"note" json:"note"`
+	Label string `mapstructure:"label" json:"label"`
 }
 
 func Load(configPath string) (*Config, error) {

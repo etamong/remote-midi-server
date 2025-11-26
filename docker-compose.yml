@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  remote-midi-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: remote-midi-server
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mount config for hot-reload
+      - ./config.yaml:/app/config.yaml:ro
+      # Optional: mount custom web files
+      # - ./web:/app/web:ro
+    environment:
+      - TZ=Asia/Seoul
+    restart: unless-stopped
+    # For MIDI device access on Linux
+    # devices:
+    #   - /dev/snd:/dev/snd
+    # privileged: true

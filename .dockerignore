@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Build artifacts
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Nix
+.direnv/
+flake.lock
+
+# Documentation
+*.md
+!README.md
+
+# Claude Code
+.claude/
+
+# Local config
+config.local.yaml
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# Test files
+*_test.go

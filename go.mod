@@ -1,6 +1,6 @@
 module github.com/etamong/remote-midi-server
 
-go 1.24.4
+go 1.23
 
 require (
 	github.com/gorilla/websocket v1.5.3

@@ -1,5 +1,8 @@
 # Remote MIDI Server
 
+[![Build and Push Docker Image](https://github.com/etamong/remote-midi-server/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/etamong/remote-midi-server/actions/workflows/docker-publish.yml)
+[![Docker Image](https://ghcr-badge.egpl.dev/etamong/remote-midi-server/latest_tag?trim=major&label=latest)](https://github.com/etamong/remote-midi-server/pkgs/container/remote-midi-server)
+
 웹 브라우저에서 접속하여 MIDI 신호를 전송할 수 있는 원격 MIDI 컨트롤러입니다. QLab 5 및 다른 MIDI 지원 애플리케이션과 함께 사용할 수 있습니다.
 
 ## 주요 기능
@@ -54,6 +57,36 @@ go mod download
 3. macOS에서 RtMidi 설치:
 ```bash
 brew install rtmidi
+```
+
+### 옵션 3: Docker 사용 (가장 간단)
+
+Docker를 사용하면 의존성 설치 없이 바로 실행할 수 있습니다:
+
+#### GitHub Container Registry에서 가져오기:
+```bash
+docker pull ghcr.io/etamong/remote-midi-server:latest
+```
+
+#### 실행:
+```bash
+docker run -d \
+  --name remote-midi-server \
+  -p 8080:8080 \
+  -v $(pwd)/config.yaml:/app/config.yaml:ro \
+  ghcr.io/etamong/remote-midi-server:latest
+```
+
+#### Docker Compose 사용:
+```bash
+# docker-compose.yml 파일 수정 (이미지를 ghcr.io/etamong/remote-midi-server:latest로 변경)
+docker-compose up -d
+```
+
+#### 로컬에서 빌드:
+```bash
+make docker-build
+make docker-run
 ```
 
 ## 설정

@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  password: "changeme"
+
+midi:
+  port_name: "Remote MIDI Server"
+  # MIDI note mappings for each button (0-127)
+  # Using chromatic scale from C4 (60) for QLab compatibility
+  buttons:
+    - note: 60  # C4
+      label: "버튼 1"
+    - note: 61  # C#4
+      label: "버튼 2"
+    - note: 62  # D4
+      label: "버튼 3"
+    - note: 63  # D#4
+      label: "버튼 4"
+    - note: 64  # E4
+      label: "버튼 5"
+    - note: 65  # F4
+      label: "버튼 6"
+    - note: 66  # F#4
+      label: "버튼 7"
+    - note: 67  # G4
+      label: "버튼 8"
+    - note: 68  # G#4
+      label: "버튼 9"
+  velocity: 127  # MIDI velocity (0-127)
+  channel: 0     # MIDI channel (0-15)

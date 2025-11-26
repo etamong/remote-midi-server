@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote MIDI Controller</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Remote MIDI Controller</h1>
+            <button id="logoutBtn" class="logout-btn">로그아웃</button>
+        </header>
+
+        <div class="status">
+            <span id="connectionStatus" class="status-disconnected">연결 안됨</span>
+        </div>
+
+        <div class="button-grid" id="buttonGrid">
+            <!-- Buttons will be dynamically generated -->
+        </div>
+
+        <div class="info">
+            <p>각 버튼을 눌러 MIDI 신호를 전송하세요</p>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -19,8 +19,10 @@
 ## 시스템 요구사항
 
 - Go 1.19 이상 (또는 Nix 사용)
-- macOS (MIDI 지원을 위해)
+- **macOS** (MIDI 지원을 위해 - Linux/Windows는 서버 전용 모드로 실행됨)
 - 네트워크 연결 (원격 접속용)
+
+> **참고**: MIDI 출력 기능은 macOS에서만 지원됩니다. Linux와 Windows 빌드는 웹 인터페이스만 제공하며 MIDI 신호를 전송하지 않습니다.
 
 ## 설치 방법
 
@@ -28,18 +30,15 @@
 
 [Releases 페이지](https://github.com/etamong/remote-midi-server/releases/latest)에서 OS에 맞는 바이너리를 다운로드하세요:
 
-- **macOS (Intel)**: `remote-midi-server-darwin-amd64.tar.gz`
-- **macOS (Apple Silicon)**: `remote-midi-server-darwin-arm64.tar.gz`
-- **Linux (x86_64)**: `remote-midi-server-linux-amd64.tar.gz`
-- **Linux (ARM64)**: `remote-midi-server-linux-arm64.tar.gz`
-- **Windows (x86_64)**: `remote-midi-server-windows-amd64.exe.zip`
+- **macOS (Intel)**: `remote-midi-server-darwin-amd64.tar.gz` - MIDI 지원
+- **macOS (Apple Silicon)**: `remote-midi-server-darwin-arm64.tar.gz` - MIDI 지원
+- **Linux (x86_64)**: `remote-midi-server-linux-amd64.tar.gz` - 웹 전용
+- **Linux (ARM64)**: `remote-midi-server-linux-arm64.tar.gz` - 웹 전용
 
 다운로드 후:
 ```bash
 # 압축 해제
-tar xzf remote-midi-server-*.tar.gz  # macOS/Linux
-# 또는
-unzip remote-midi-server-*.zip       # Windows
+tar xzf remote-midi-server-*.tar.gz
 
 # 실행
 ./remote-midi-server

@@ -33,6 +33,11 @@ sudo mkdir -p "$INSTALL_BIN"
 sudo mkdir -p "$INSTALL_SHARE"
 sudo mkdir -p "$INSTALL_LOG"
 
+# 로그 파일 생성 (launchd가 쓸 수 있도록)
+sudo touch "$INSTALL_LOG/remote-midi-server.log"
+sudo touch "$INSTALL_LOG/remote-midi-server.error.log"
+sudo chown "$USER" "$INSTALL_LOG/remote-midi-server.log" "$INSTALL_LOG/remote-midi-server.error.log"
+
 # 파일 복사
 echo "[4/6] 파일 설치 중..."
 sudo cp "$PROJECT_DIR/remote-midi-server" "$INSTALL_BIN/"
@@ -41,6 +46,7 @@ sudo cp "$PROJECT_DIR/config.yaml" "$INSTALL_SHARE/"
 
 # 권한 설정
 sudo chmod +x "$INSTALL_BIN/remote-midi-server"
+sudo chmod -R a+rX "$INSTALL_SHARE"
 
 # LaunchAgent 등록
 echo "[5/6] LaunchAgent 등록 중..."

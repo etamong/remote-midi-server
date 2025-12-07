@@ -79,6 +79,11 @@ brew install rtmidi
 
 ### 옵션 4: Docker 사용
 
+> **⚠️ 주의: Docker 환경에서는 MIDI 출력이 지원되지 않습니다.**
+>
+> macOS에서 Docker는 Linux VM 내부에서 실행되므로 호스트의 CoreMIDI에 접근할 수 없습니다.
+> Docker는 웹 UI 테스트 용도로만 사용하고, 실제 MIDI 출력이 필요하면 네이티브로 실행하세요.
+
 Docker를 사용하면 의존성 설치 없이 바로 실행할 수 있습니다:
 
 #### GitHub Container Registry에서 가져오기:

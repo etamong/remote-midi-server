@@ -158,6 +158,46 @@ make build
 ./bin/remote-midi-server -config /path/to/config.yaml
 ```
 
+### macOS 부팅 시 자동 실행 (launchd)
+
+macOS에서 시스템 부팅 시 자동으로 서버를 실행하려면 LaunchAgent를 사용합니다:
+
+```bash
+# 1. 바이너리 빌드
+go build -o remote-midi-server cmd/server/main.go
+
+# 2. 파일 설치
+sudo mkdir -p /usr/local/bin
+sudo mkdir -p /usr/local/share/remote-midi-server
+sudo mkdir -p /usr/local/var/log
+
+sudo cp remote-midi-server /usr/local/bin/
+sudo cp -r web /usr/local/share/remote-midi-server/
+sudo cp config.yaml /usr/local/share/remote-midi-server/
+
+# 3. LaunchAgent 등록
+cp com.etamong.remote-midi-server.plist ~/Library/LaunchAgents/
+
+# 4. 서비스 시작
+launchctl load ~/Library/LaunchAgents/com.etamong.remote-midi-server.plist
+```
+
+#### 서비스 관리 명령어:
+```bash
+# 상태 확인
+launchctl list | grep remote-midi
+
+# 중지
+launchctl unload ~/Library/LaunchAgents/com.etamong.remote-midi-server.plist
+
+# 시작
+launchctl load ~/Library/LaunchAgents/com.etamong.remote-midi-server.plist
+
+# 로그 확인
+tail -f /usr/local/var/log/remote-midi-server.log
+tail -f /usr/local/var/log/remote-midi-server.error.log
+```
+
 ## 사용 방법
 
 1. 서버 실행:

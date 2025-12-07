@@ -36,10 +36,12 @@ RUN /go/bin/go1.24.10 mod tidy && \
 # Runtime stage
 FROM alpine:latest
 
-# Install runtime dependencies
+# Install runtime dependencies (libstdc++ for C++ runtime, libgcc for GCC runtime)
 RUN apk add --no-cache \
     alsa-lib \
-    ca-certificates
+    ca-certificates \
+    libstdc++ \
+    libgcc
 
 WORKDIR /app
 

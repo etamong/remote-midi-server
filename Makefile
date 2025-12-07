@@ -1,4 +1,6 @@
-.PHONY: build run install clean docker-build docker-run docker-stop docker-logs help
+.PHONY: build run install clean docker-build docker-run docker-stop docker-logs \
+       service-install service-uninstall service-status service-start service-stop \
+       service-restart service-logs service-config service-update help
 
 # Build the server binary
 build:
@@ -41,20 +43,69 @@ docker-logs:
 	@echo "Showing Docker logs..."
 	docker-compose logs -f
 
+# === macOS launchd Service ===
+
+# Install as launchd service
+service-install:
+	@./scripts/install-launchd.sh
+
+# Uninstall launchd service
+service-uninstall:
+	@./scripts/uninstall-launchd.sh
+
+# Show service status
+service-status:
+	@./scripts/manage.sh status
+
+# Start service
+service-start:
+	@./scripts/manage.sh start
+
+# Stop service
+service-stop:
+	@./scripts/manage.sh stop
+
+# Restart service
+service-restart:
+	@./scripts/manage.sh restart
+
+# View service logs
+service-logs:
+	@./scripts/manage.sh logs
+
+# Edit service config
+service-config:
+	@./scripts/manage.sh config
+
+# Update service binary
+service-update:
+	@./scripts/update.sh
+
 # Show help
 help:
 	@echo "Remote MIDI Server - Makefile commands:"
 	@echo ""
 	@echo "Local development:"
-	@echo "  make build        - Build the server binary"
-	@echo "  make run          - Run the server locally"
-	@echo "  make install      - Install Go dependencies"
-	@echo "  make clean        - Clean build artifacts"
+	@echo "  make build          - Build the server binary"
+	@echo "  make run            - Run the server locally"
+	@echo "  make install        - Install Go dependencies"
+	@echo "  make clean          - Clean build artifacts"
 	@echo ""
-	@echo "Docker:"
-	@echo "  make docker-build - Build Docker image"
-	@echo "  make docker-run   - Run with Docker Compose"
-	@echo "  make docker-stop  - Stop Docker container"
-	@echo "  make docker-logs  - View Docker container logs"
+	@echo "Docker (MIDI 미지원, 웹 UI 테스트용):"
+	@echo "  make docker-build   - Build Docker image"
+	@echo "  make docker-run     - Run with Docker Compose"
+	@echo "  make docker-stop    - Stop Docker container"
+	@echo "  make docker-logs    - View Docker container logs"
 	@echo ""
-	@echo "  make help         - Show this help message"
+	@echo "macOS launchd Service:"
+	@echo "  make service-install   - Install as launchd service"
+	@echo "  make service-uninstall - Uninstall launchd service"
+	@echo "  make service-status    - Show service status"
+	@echo "  make service-start     - Start service"
+	@echo "  make service-stop      - Stop service"
+	@echo "  make service-restart   - Restart service"
+	@echo "  make service-logs      - View service logs"
+	@echo "  make service-config    - Edit service config"
+	@echo "  make service-update    - Update service binary"
+	@echo ""
+	@echo "  make help           - Show this help message"

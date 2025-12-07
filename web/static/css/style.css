@@ -90,7 +90,7 @@ h1 {
     border: none;
     border-radius: 15px;
     color: white;
-    font-size: 18px;
+    font-size: 30px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.1s;
@@ -128,7 +128,7 @@ h1 {
     }
 
     h1 {
-        font-size: 20px;
+        font-size: 30px;
     }
 
     .button-grid {

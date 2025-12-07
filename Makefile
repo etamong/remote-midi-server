@@ -15,6 +15,18 @@ run:
 # Install dependencies
 install:
 	@echo "Installing dependencies..."
+	@if [ "$$(uname)" = "Darwin" ]; then \
+		if command -v brew >/dev/null 2>&1; then \
+			if ! brew list rtmidi >/dev/null 2>&1; then \
+				echo "Installing rtmidi via Homebrew..."; \
+				brew install rtmidi; \
+			else \
+				echo "rtmidi already installed"; \
+			fi \
+		else \
+			echo "Warning: Homebrew not found. Please install rtmidi manually."; \
+		fi \
+	fi
 	go mod download
 	go mod tidy
 

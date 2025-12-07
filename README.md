@@ -321,14 +321,33 @@ macOS에서는 rtmidi 드라이버가 자동으로 가상 MIDI 포트를 생성�
 - `gitlab.com/gomidi/midi/v2` - MIDI 처리
 - `gitlab.com/gomidi/midi/v2/drivers/rtmididrv` - MIDI 드라이버
 
-### 빌드 명령어
+### Makefile 명령어
 
 ```bash
-make build      # 빌드
-make run        # 실행
-make install    # 의존성 설치
-make clean      # 빌드 파일 삭제
-make help       # 도움말
+# 개발
+make build           # 빌드
+make run             # 실행
+make install         # 의존성 설치 (rtmidi 포함)
+make clean           # 빌드 파일 삭제
+
+# Docker (MIDI 미지원, 웹 UI 테스트용)
+make docker-build    # Docker 이미지 빌드
+make docker-run      # Docker Compose로 실행
+make docker-stop     # Docker 컨테이너 중지
+make docker-logs     # Docker 로그 보기
+
+# macOS launchd 서비스
+make service-install    # launchd 서비스 설치
+make service-uninstall  # 서비스 제거
+make service-status     # 상태 확인
+make service-start      # 시작
+make service-stop       # 중지
+make service-restart    # 재시작
+make service-logs       # 로그 보기
+make service-config     # 설정 편집
+make service-update     # 바이너리 업데이트
+
+make help            # 도움말
 ```
 
 ## 라이선스

@@ -146,12 +146,13 @@ func (h *Handler) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 		// Send MIDI note
 		button := cfg.MIDI.Buttons[msg.ButtonIndex]
-		if err := h.midiClient.SendNote(button.Note, cfg.MIDI.Velocity, 100*time.Millisecond); err != nil {
+		velocity := button.GetVelocity(cfg.MIDI.Velocity)
+		if err := h.midiClient.SendNote(button.Note, velocity, 100*time.Millisecond); err != nil {
 			log.Printf("Failed to send MIDI note: %v", err)
 			continue
 		}
 
-		log.Printf("Button %d pressed: note=%d label=%s", msg.ButtonIndex, button.Note, button.Label)
+		log.Printf("Button %d pressed: note=%d velocity=%d label=%s", msg.ButtonIndex, button.Note, velocity, button.Label)
 
 		// Send acknowledgment
 		ack := map[string]interface{}{

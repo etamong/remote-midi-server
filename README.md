@@ -137,10 +137,23 @@ midi:
 
 ### 버튼 라벨 및 MIDI 노트 커스터마이징
 
-각 버튼의 `label`과 `note` 값을 원하는 대로 변경할 수 있습니다:
+각 버튼의 설정을 원하는 대로 변경할 수 있습니다:
 
 - **label**: 버튼에 표시될 한글/영문 텍스트
 - **note**: MIDI 노트 번호 (C4 = 60, C#4 = 61, D4 = 62, ...)
+- **velocity** (선택): 버튼별 벨로시티 (미설정 시 전역 velocity 사용)
+
+```yaml
+buttons:
+  - note: 60
+    label: "부드럽게"
+    velocity: 64      # 이 버튼만 벨로시티 64
+  - note: 61
+    label: "강하게"
+    velocity: 127     # 이 버튼만 벨로시티 127
+  - note: 62
+    label: "기본"     # velocity 미설정 → 전역 velocity 사용
+```
 
 ## 실행 방법
 

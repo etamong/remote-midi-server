@@ -27,8 +27,17 @@ type MIDIConfig struct {
 }
 
 type ButtonConfig struct {
-	Note  uint8  `mapstructure:"note" json:"note"`
-	Label string `mapstructure:"label" json:"label"`
+	Note     uint8  `mapstructure:"note" json:"note"`
+	Label    string `mapstructure:"label" json:"label"`
+	Velocity *uint8 `mapstructure:"velocity" json:"velocity,omitempty"` // Optional per-button velocity
+}
+
+// GetVelocity returns the button's velocity, or the global velocity if not set
+func (b *ButtonConfig) GetVelocity(globalVelocity uint8) uint8 {
+	if b.Velocity != nil {
+		return *b.Velocity
+	}
+	return globalVelocity
 }
 
 func Load(configPath string) (*Config, error) {

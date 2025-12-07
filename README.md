@@ -167,8 +167,19 @@ make build
 
 ### macOS 부팅 시 자동 실행 (launchd)
 
-macOS에서 시스템 부팅 시 자동으로 서버를 실행하려면 LaunchAgent를 사용합니다:
+macOS에서 시스템 부팅 시 자동으로 서버를 실행하려면 LaunchAgent를 사용합니다.
 
+#### 스크립트로 설치 (권장):
+```bash
+./scripts/install-launchd.sh
+```
+
+#### 제거:
+```bash
+./scripts/uninstall-launchd.sh
+```
+
+#### 수동 설치:
 ```bash
 # 1. 바이너리 빌드
 go build -o remote-midi-server cmd/server/main.go
